@@ -31,6 +31,8 @@ SoftwareSerial mySerial(RX_PIN, TX_PIN);                   // Uno example
 #define wifi_ssid "Esperyd"
 #define wifi_password "Esperyd4"
 
+#define host_name "ESP_Guest1"
+
 //MQTT configuration
 #define mqtt_server "192.168.10.100"
 #define mqtt_user "mqtt"
@@ -59,7 +61,7 @@ void setup_wifi() {
   delay(10);
   Serial.print("Connecting to ");
   Serial.print(wifi_ssid);
-  WiFi.hostname("ESP_Guest1");
+  WiFi.hostname(host_name);
   WiFi.begin(wifi_ssid, wifi_password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -78,7 +80,7 @@ void setup() {
 
   Serial.print("Configuring OTA device...");
   TelnetServer.begin();   //Necesary to make Arduino Software autodetect OTA device  
-  ArduinoOTA.setHostname("ESP_Guest1");
+  ArduinoOTA.setHostname(host_name);
   ArduinoOTA.onStart([]() {Serial.println("OTA starting...");});
   ArduinoOTA.onEnd([]() {Serial.println("OTA update finished!");Serial.println("Rebooting...");});
   ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {Serial.printf("OTA in progress: %u%%\r\n", (progress / (total / 100)));});  
